@@ -24,7 +24,10 @@ class Cache:
             self.players.append(player)
     
     def matchmake(self):
-        return sorted(self.players, key=lambda x: x.score(), reverse=True)[:10]
+        game = []
+        for player in sorted(self.players, key=lambda x: x.score(), reverse=True)[:10]:
+            game.append(player.getName())
+        return game
     
     def evict(self):
         if len(self.players) > 0:
