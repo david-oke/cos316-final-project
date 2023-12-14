@@ -2,6 +2,12 @@ import csv
 from random import randint
 import argparse
 
+'''
+Generates a csv file given a number of needed players
+Theoretically, code should work for a realistic set of players,
+but this acts as a substitute
+'''
+
 def generate(num):
     with open('testProfiles' + str(num) + '.csv', 'w', newline='') as file:
         writer = csv.writer(file)
