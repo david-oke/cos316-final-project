@@ -28,7 +28,7 @@ class Player:
         self.latency = latency
         self.infractions = infractions
         self.skill_level = skill_level
-        self.role = role
+        #self.role = role
     
     # algorithm for computing score
     # Weigh heavily different factors (for example, latency should be prioritized)
