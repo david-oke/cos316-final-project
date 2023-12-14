@@ -1,3 +1,5 @@
+from datetime import datetime
+
 # Player representation
 
 '''
@@ -19,8 +21,22 @@ If cache is full:
 '''
 class Player:
     
-    def __init__(self):
-        pass
+    def __init__(self, play_frequency, last_played, latency, infractions, skill_level, role=None):
+        self.play_frequency = play_frequency
+        self.last_played = last_played
+        self.latency = latency
+        self.infractions = infractions
+        self.skill_level = skill_level
+        self.role = role
+    
+    # algorithm for computing score
+    # Weigh heavily different factors (for example, latency should be prioritized)
     
     def score(self):
-        pass
+        return (
+            self.play_frequency +
+            (datetime.now() - self.last_played).days * 0.1 +
+            (100 - self.latency) +
+            (-10 * self.infractions) +
+            (2 * self.skill_level)
+        )

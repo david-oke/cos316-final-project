@@ -12,17 +12,25 @@ leave 10 players in the cache
 '''
 class Cache:
     
-    def __init__(self):
-        pass
+    def __init__(self, max_size=15):
+        self.max_size = max_size
+        self.players = []
     
-    def add(self):
-        pass
+    def add(self, player):
+        if len(self.players) < self.max_size:
+            self.players.append(player)
+        else:
+            self.evict()
+            self.players.append(player)
     
     def get(self):
-        pass
+        return sorted(self.players, key=lambda x: x.score(), reverse=True)[:10]
     
     def evict(self):
-        pass
-
+        if len(self.players) > 0:
+            # Evict player with the lowest score
+            self.players.remove(min(self.players, key=lambda x: x.score()))
+    
     def stats(self):
+        # Provide any cache statistics if needed
         pass
