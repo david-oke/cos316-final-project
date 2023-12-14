@@ -23,7 +23,7 @@ class Cache:
             self.evict()
             self.players.append(player)
     
-    def get(self):
+    def matchmake(self):
         return sorted(self.players, key=lambda x: x.score(), reverse=True)[:10]
     
     def evict(self):
