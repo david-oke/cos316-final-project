@@ -7,7 +7,7 @@ def main():
     cache = Cache(15)
     matchmaking_queue = []
 
-    # Create 100 players randomly
+    # Create 100 players (randomly)
     for i in range(100):
         name = "Player "
         name += str(i+1)
