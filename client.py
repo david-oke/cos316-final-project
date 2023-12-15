@@ -2,12 +2,13 @@
 
 from player import *
 from cache import *
-from latency_cache import *
+from fifo_cache import *
 import pandas as pd
+import argparse
 import time
 
 matchmaking_queue = []
-
+CACHES = [Cache, FIFO_Cache]
 def parse_csv(file):
     try:
         data = pd.read_csv(file)
@@ -19,10 +20,15 @@ def parse_csv(file):
         return f"An error occurred: {e}"
 
 
-def main():    
-    parse_csv('testProfiles1000-5000.csv')
-    print("Score Cache")
-    cache = Cache(15)
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('cache', type=int, help='Cache Type')
+    parser.add_argument('max', type=int, help='Max Size')
+    args = parser.parse_args()
+
+    parse_csv('testProfiles10000-50000.csv')
+    cache = CACHES[args.cache](args.max)
+    print(cache.getName())
     
     total_time = 0
     groups = 0 
@@ -32,8 +38,6 @@ def main():
         roles = set()
         index = 0
         while len(roles) < 5:
-            #print(matchmaking_queue[index].getName() + ' ' + str(matchmaking_queue[index].getRole()))
-        
             if not matchmaking_queue[index].getRole() in roles:
                 roles.add(matchmaking_queue[index].getRole())
                 cache.add(matchmaking_queue.pop(index))
@@ -46,28 +50,12 @@ def main():
         if noComplete:
             break
         toc = time.perf_counter()
-        #print(toc - tic)
         total_time += toc - tic
         groups += 1
     
     print(total_time/groups)
-
-
-    # print("Added to game: ")
-    # print(cache.matchmake())
     print(str(cache.getRetrieveCount()) + " retrievals")
-    # print(f"{time.perf_counter() - tic:0.4f} seconds") 
 
-    # print("Latency Cache")
-    # lcache = Latency_Cache(15)
-    # tic = time.perf_counter()
-    # for player in matchmaking_queue:
-    #     lcache.add(player)
-
-    # print("Added to game: ")
-    # print(lcache.matchmake())
-    # print(str(lcache.getRetrieveCount()) + " retrievals")
-    # print(f"{time.perf_counter() - tic:0.4f} seconds") 
 
 
 

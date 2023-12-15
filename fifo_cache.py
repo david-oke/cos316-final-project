@@ -4,14 +4,12 @@ import time
 '''
 Cache works as follows:
 
-10 players per game
+Stores up to max_size players
 
-15 players in matchmaking cache, pick top 10 to matchmake
-
-leave 10 players in the cache
+Evicts based on entry
 
 '''
-class Latency_Cache:
+class FIFO_Cache:
     
     def __init__(self, max_size=15):
         self.max_size = max_size
@@ -19,7 +17,7 @@ class Latency_Cache:
         self.retrieveCount = 0
     
     def retrieveInfoFromDB(self, player):
-        time.sleep(float(player.getLatency()) / 1000)
+        time.sleep(0.01)
         self.retrieveCount+=1
 
     def add(self, player):
@@ -31,11 +29,6 @@ class Latency_Cache:
                 self.evict()
                 self.players.append(player)
     
-    def matchmake(self):
-        game = []
-        for player in sorted(self.players, key=lambda x: x.getLatency(), reverse=True)[:10]:
-            game.append(player.getName())
-        return game
     
     def contains(self, player):
         for player2 in self.players:
@@ -45,12 +38,11 @@ class Latency_Cache:
     
     def evict(self):
         if len(self.players) > 0:
-            # Evict player with the lowest latency
-            self.players.remove(min(self.players, key=lambda x: x.getLatency()))
+            # Evict the first player to enter the cache
+            self.players.pop(0)
     
     def getRetrieveCount(self):
         return self.retrieveCount
     
-    def stats(self):
-        # Provide any cache statistics if needed
-        pass
+    def getName(self):
+        return "FIFO Cache"

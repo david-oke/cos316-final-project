@@ -9,7 +9,7 @@ Players have the following attributes:
     - latency to central server
     - number of community infractions
     - skill level
-    - player role?
+    - player role
 
 All of the above attributes will contribute to a player 'score' 
 based on the matchmaking pool they are potentially added to.

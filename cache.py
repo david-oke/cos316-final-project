@@ -4,11 +4,9 @@ import time
 '''
 Cache works as follows:
 
-10 players per game
+Stores up to max_size players
 
-15 players in matchmaking cache, pick top 10 to matchmake
-
-leave 10 players in the cache
+Evicts based on score
 
 '''
 class Cache:
@@ -19,7 +17,7 @@ class Cache:
         self.retrieveCount = 0
     
     def retrieveInfoFromDB(self, player):
-        #time.sleep(0.05)
+        time.sleep(0.01)
         self.retrieveCount+=1
 
     def add(self, player):
@@ -30,12 +28,6 @@ class Cache:
             else:
                 self.evict()
                 self.players.append(player)
-    
-    def matchmake(self):
-        game = []
-        for player in sorted(self.players, key=lambda x: x.score(), reverse=True)[:10]:
-            game.append(player.getName())
-        return game
     
     def contains(self, player):
         for player2 in self.players:
@@ -51,6 +43,5 @@ class Cache:
     def getRetrieveCount(self):
         return self.retrieveCount
     
-    def stats(self):
-        # Provide any cache statistics if needed
-        pass
+    def getName(self):
+        return "Score Cache"
