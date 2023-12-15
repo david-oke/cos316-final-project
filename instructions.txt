@@ -1,0 +1,23 @@
+Dependencies:
+    - Python 3.0 (or higher)
+    - Pandas (https://pandas.pydata.org/)
+       - (With pip run: $ pip install pandas)
+
+Instructions:
+    - To run simulation, run '$ python client.py [cache] [max cache size] [file name]'
+            - for 'cache' argument:
+                - 0: Score Cache (our implementation)
+                - 1: FIFO Cache
+            - 'max cache size' argument:
+                - Max integer size of cache
+            - 'file name' argument:
+                - String filename (relative path)
+                    - e.g.: "testProfiles100-500.csv"
+    
+    - To generate custom test files, run '$ python data_generator.py [players] [entries]'
+        - 'players' argument: integer, number of unique players
+        - 'entries' argument: integer, number of player entries into the 'matchmaking queue'
+        - Will create a file in the directory called: "testProfiles[players]-[entries].csv"
+
+
+    

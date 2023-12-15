@@ -24,9 +24,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('cache', type=int, help='Cache Type')
     parser.add_argument('max', type=int, help='Max Size')
+    parser.add_argument('filename', type=str, help='File Name')
     args = parser.parse_args()
 
-    parse_csv('testProfiles10000-50000.csv')
+    parse_csv(args.filename)
     cache = CACHES[args.cache](args.max)
     print(cache.getName())
     
