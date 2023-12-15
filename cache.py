@@ -19,7 +19,7 @@ class Cache:
         self.retrieveCount = 0
     
     def retrieveInfoFromDB(self, player):
-        time.sleep(0.01)
+        #time.sleep(0.05)
         self.retrieveCount+=1
 
     def add(self, player):

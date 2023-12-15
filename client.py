@@ -20,7 +20,7 @@ def parse_csv(file):
 
 
 def main():    
-    parse_csv('testProfiles100-500.csv')
+    parse_csv('testProfiles1000-5000.csv')
     print("Score Cache")
     cache = Cache(15)
     
@@ -41,13 +41,12 @@ def main():
             else:
                 index += 1
                 if index >= len(matchmaking_queue):
-                    print('not enough roles for this group')
                     noComplete = True
                     break
         if noComplete:
             break
         toc = time.perf_counter()
-        print(toc - tic)
+        #print(toc - tic)
         total_time += toc - tic
         groups += 1
     
@@ -56,7 +55,7 @@ def main():
 
     # print("Added to game: ")
     # print(cache.matchmake())
-    # print(str(cache.getRetrieveCount()) + " retrievals")
+    print(str(cache.getRetrieveCount()) + " retrievals")
     # print(f"{time.perf_counter() - tic:0.4f} seconds") 
 
     # print("Latency Cache")
