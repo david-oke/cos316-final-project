@@ -11,7 +11,7 @@ but this acts as a substitute
 def generate(players, entries):
     with open('testProfiles' + str(players) + '-' + str(entries) + '.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        field = ["ID", "Play Frequency", "Time Since Played", "Latency", "Infractions", "Skill Level"]
+        field = ["ID", "Play Frequency", "Time Since Played", "Latency", "Infractions", "Skill Level", "Role"]
         writer.writerow(field)
         playerList = []
 
@@ -23,7 +23,8 @@ def generate(players, entries):
             lp = randint(0, 24)
             inf = randint(0, 5)
             skill = randint(0, 100)
-            playerList.append([name, freq, lp, lat, inf, skill])
+            role = randint(0, 4)
+            playerList.append([name, freq, lp, lat, inf, skill, role])
         
         for i in range(entries):
             writer.writerow(playerList[randint(0, len(playerList) - 1)])

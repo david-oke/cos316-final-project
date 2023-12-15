@@ -28,12 +28,13 @@ class Player:
         self.latency = latency
         self.infractions = infractions
         self.skill_level = skill_level
-        #self.role = role
+        self.role = role
     
     # algorithm for computing score
     # Weigh heavily different factors (for example, latency should be prioritized)
 
     def score(self):
+
         return (
             self.play_frequency +
             (-self.last_played) * 0.1 +
@@ -44,6 +45,9 @@ class Player:
     
     def getLatency(self):
         return self.latency
+    
+    def getRole(self):
+        return self.role
     
     def getName(self):
         return self.name

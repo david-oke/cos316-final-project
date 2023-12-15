@@ -13,7 +13,7 @@ def parse_csv(file):
         data = pd.read_csv(file)
         rows = data.values.tolist()
         for row in rows:
-            p = Player (row[0], row[1], row[2], row[3], row[4], row[5])
+            p = Player (row[0], row[1], row[2], row[3], row[4], row[5], row[6])
             matchmaking_queue.append(p)
     except Exception as e:
         return f"An error occurred: {e}"
@@ -26,12 +26,28 @@ def main():
     
     total_time = 0
     groups = 0 
-    for i in range(0, int(len(matchmaking_queue) / 10)):
+    noComplete = False
+    for i in range(0, int(len(matchmaking_queue) / 5)):
         tic = time.perf_counter()
-        for j in range(0, 10):
-            cache.add(matchmaking_queue.pop(0))
+        roles = set()
+        index = 0
+        while len(roles) < 5:
+            #print(matchmaking_queue[index].getName() + ' ' + str(matchmaking_queue[index].getRole()))
+        
+            if not matchmaking_queue[index].getRole() in roles:
+                roles.add(matchmaking_queue[index].getRole())
+                cache.add(matchmaking_queue.pop(index))
+                index = 0
+            else:
+                index += 1
+                if index >= len(matchmaking_queue):
+                    print('not enough roles for this group')
+                    noComplete = True
+                    break
+        if noComplete:
+            break
         toc = time.perf_counter()
-        #print(toc-tic)
+        print(toc - tic)
         total_time += toc - tic
         groups += 1
     
