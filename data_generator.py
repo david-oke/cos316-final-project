@@ -33,7 +33,6 @@ def main():
     parser.add_argument('players', type=int, help='Number of players')
     parser.add_argument('entries', type=int, help='Number of entries')
     args = parser.parse_args()
-    print(args)
     generate(args.players, args.entries)
 
 if __name__ == '__main__':

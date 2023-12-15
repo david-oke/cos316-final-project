@@ -1,4 +1,5 @@
 # Cache with cache eviction algorithm
+import time
 
 '''
 Cache works as follows:
@@ -16,12 +17,17 @@ class Cache:
         self.max_size = max_size
         self.players = []
     
+    def retrieveInfoFromDB(self, player):
+        time.sleep(0.1)
+
     def add(self, player):
-        if len(self.players) < self.max_size:
-            self.players.append(player)
-        else:
-            self.evict()
-            self.players.append(player)
+        if not self.contains(player):
+            self.retrieveInfoFromDB(player)
+            if len(self.players) < self.max_size:
+                self.players.append(player)
+            else:
+                self.evict()
+                self.players.append(player)
     
     def matchmake(self):
         game = []
@@ -29,6 +35,12 @@ class Cache:
             game.append(player.getName())
         return game
     
+    def contains(self, player):
+        for player2 in self.players:
+            if player.getName() == player2.getName():
+                return True
+        return False
+
     def evict(self):
         if len(self.players) > 0:
             # Evict player with the lowest score

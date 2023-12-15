@@ -41,5 +41,6 @@ class Player:
             (-10 * self.infractions) +
             (2 * self.skill_level)
         )
+    
     def getName(self):
         return self.name
