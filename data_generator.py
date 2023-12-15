@@ -8,13 +8,14 @@ Theoretically, code should work for a realistic set of players,
 but this acts as a substitute
 '''
 
-def generate(num):
-    with open('testProfiles' + str(num) + '.csv', 'w', newline='') as file:
+def generate(players, entries):
+    with open('testProfiles' + str(players) + '-' + str(entries) + '.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         field = ["ID", "Play Frequency", "Time Since Played", "Latency", "Infractions", "Skill Level"]
         writer.writerow(field)
+        playerList = []
 
-        for i in range(num):
+        for i in range(players):
             name = "Player "
             name += str(i+1)
             freq = randint(0, 24)
@@ -22,13 +23,18 @@ def generate(num):
             lp = randint(0, 24)
             inf = randint(0, 5)
             skill = randint(0, 100)
-            writer.writerow([name, freq, lat, lp, inf, skill])
+            playerList.append([name, freq, lat, lp, inf, skill])
+        
+        for i in range(entries):
+            writer.writerow(playerList[randint(0, len(playerList) - 1)])
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('rows', type=int, help='Number of rows')
+    parser.add_argument('players', type=int, help='Number of players')
+    parser.add_argument('entries', type=int, help='Number of entries')
     args = parser.parse_args()
-    generate(args.rows)
+    print(args)
+    generate(args.players, args.entries)
 
 if __name__ == '__main__':
     main()
