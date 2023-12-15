@@ -2,6 +2,7 @@
 
 from player import *
 from cache import *
+from latency_cache import *
 import pandas as pd
 import time
 
@@ -19,7 +20,7 @@ def parse_csv(file):
 
 
 def main():    
-    print(parse_csv('testProfiles100-500.csv'))
+    parse_csv('testProfiles1000-5000.csv')
     cache = Cache(15)
     tic = time.perf_counter()
     for player in matchmaking_queue:
@@ -27,6 +28,18 @@ def main():
 
     print("Added to game: ")
     print(cache.matchmake())
+    print(str(cache.getRetrieveCount()) + " retrievals")
+    print(f"{time.perf_counter() - tic:0.4f} seconds") 
+
+
+    lcache = Latency_Cache(15)
+    tic = time.perf_counter()
+    for player in matchmaking_queue:
+        lcache.add(player)
+
+    print("Added to game: ")
+    print(lcache.matchmake())
+    print(str(lcache.getRetrieveCount()) + " retrievals")
     print(f"{time.perf_counter() - tic:0.4f} seconds") 
 
 

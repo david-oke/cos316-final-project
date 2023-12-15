@@ -11,7 +11,7 @@ Cache works as follows:
 leave 10 players in the cache
 
 '''
-class Cache:
+class Latency_Cache:
     
     def __init__(self, max_size=15):
         self.max_size = max_size
@@ -19,7 +19,7 @@ class Cache:
         self.retrieveCount = 0
     
     def retrieveInfoFromDB(self, player):
-        time.sleep(0.01)
+        time.sleep(float(player.getLatency()) / 1000)
         self.retrieveCount+=1
 
     def add(self, player):
@@ -33,7 +33,7 @@ class Cache:
     
     def matchmake(self):
         game = []
-        for player in sorted(self.players, key=lambda x: x.score(), reverse=True)[:10]:
+        for player in sorted(self.players, key=lambda x: x.getLatency(), reverse=True)[:10]:
             game.append(player.getName())
         return game
     
@@ -45,8 +45,8 @@ class Cache:
     
     def evict(self):
         if len(self.players) > 0:
-            # Evict player with the lowest score
-            self.players.remove(min(self.players, key=lambda x: x.score()))
+            # Evict player with the lowest latency
+            self.players.remove(min(self.players, key=lambda x: x.getLatency()))
     
     def getRetrieveCount(self):
         return self.retrieveCount

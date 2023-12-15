@@ -42,5 +42,8 @@ class Player:
             (2 * self.skill_level)
         )
     
+    def getLatency(self):
+        return self.latency
+    
     def getName(self):
         return self.name
