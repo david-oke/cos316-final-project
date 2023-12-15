@@ -23,7 +23,7 @@ def generate(players, entries):
             lp = randint(0, 24)
             inf = randint(0, 5)
             skill = randint(0, 100)
-            playerList.append([name, freq, lat, lp, inf, skill])
+            playerList.append([name, freq, lp, lat, inf, skill])
         
         for i in range(entries):
             writer.writerow(playerList[randint(0, len(playerList) - 1)])
